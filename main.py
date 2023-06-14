@@ -60,9 +60,9 @@ def generate_response(system_prompt, user_prompt, *args):
                 sleep(10)
             else:
                 # from character 88 to the first space
-                messageLength = int(str(e)[88:].split(" ")[0])
+                messageLength = int(str(e)[90:].split(" ")[0])
                 oldMaxTokens = params["max_tokens"]
-                params["max_tokens"] = 4097 - messageLength - 1
+                params["max_tokens"] = DEFAULT_MAX_TOKENS - messageLength - 1
                 if oldMaxTokens == params["max_tokens"]:
                     params["max_tokens"] = int(oldMaxTokens * .9)
                 print("Decreasing max tokens to ",
@@ -95,9 +95,10 @@ def generate_file(
     Now your job is to generate only the code for the file {filename}.
     Make sure to have consistent filenames if you reference other files we are also generating.
 
-    Remember that you must obey 3 things:
+    Remember that you must obey 4 things:
        - you are generating code for the file {filename}
        - do not stray from the names of the files and the shared dependencies we have decided on
+       - write full code, do not write comments instead of the actual code logic
        - MOST IMPORTANT OF ALL - the purpose of our app is {prompt} - every line of code you generate must be valid code. Do not include code fences in your response, for example
 
     Bad response:
